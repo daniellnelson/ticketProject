@@ -1,0 +1,83 @@
+﻿@model IEnumerable<ticketsDemo.Models.tickets>
+
+@{
+    ViewData["Title"] = "Closed Tickets";
+}
+
+<h1>Closed Tickets</h1>
+
+<p>
+    <a asp-action="userView">Back to Open List</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                Submission Date
+            </th>
+            <th>
+               Closed On
+            </th>
+            <th>
+                Severity
+            </th>
+            <th>
+                Priority
+            </th>
+            <th>
+               Assignee
+            </th>
+            <th>
+                Submitter
+            </th>
+            <th>
+               Description
+            </th>
+            <th>
+               Status
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            @if (item.status.id == 3)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SubmittedDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ClosedDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.severity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.priority)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.assignee.fullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.submitter.fullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.status.statusName)
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

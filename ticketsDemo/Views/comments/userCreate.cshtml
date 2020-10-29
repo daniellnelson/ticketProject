@@ -1,0 +1,44 @@
+﻿@model ticketsDemo.Models.comments
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create a Comment</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="userCreate">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                Select the Ticket ID Represented in the URL Above
+                <select asp-for="ticketID" class="form-control" asp-items="ViewBag.ticketID"></select>
+            </div>
+            <div class="form-group">
+                Comment Date
+                <input asp-for="commentDate" class="form-control" />
+                <span asp-validation-for="commentDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                Description
+                <input asp-for="commentDescription" class="form-control" />
+                <span asp-validation-for="commentDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                Assignee
+                <select asp-for="assigneeId" class="form-control" asp-items="ViewBag.assigneeId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="tickets" asp-action="userView">Back to Tickets</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

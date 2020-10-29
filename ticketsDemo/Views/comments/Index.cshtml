@@ -1,0 +1,59 @@
+﻿@model IEnumerable<ticketsDemo.Models.comments>
+
+@{
+    ViewData["Title"] = "Comments";
+}
+
+<h1>Comments</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Date
+            </th>
+            <th>
+                Comment
+            </th>
+            <th>
+                Assignee
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.commentDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.commentDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.assignee.fullName)
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.id">Delete</a> |
+                    @if (item == Model.Last())
+                    {
+                        <br />
+                        <br />
+                        <a asp-controller="tickets" asp-action="Index">Back to List</a>
+                        <a asp-action="Create" asp-route-id="@item.ticketID">Leave a New Comment</a>
+                    }
+                </td>
+
+            </tr>
+
+
+
+        }
+        @if (Model.Count() == 0)
+        {
+            <a asp-controller="tickets" asp-action="Index">Back to List</a>
+            <a asp-action="Create" asp-route-id="@ViewBag.urlID">Leave a New Comment</a>
+        }
+    </tbody>
+</table>

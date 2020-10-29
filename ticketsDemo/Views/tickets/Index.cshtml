@@ -1,0 +1,99 @@
+﻿@model IEnumerable<ticketsDemo.Models.tickets>
+
+@{
+    ViewData["Title"] = "Open Tickets";
+}
+
+<h1>Open Tickets</h1>
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">Menu</button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li> <a asp-action="closedTickets">View Closed Tickets</a></li>
+                <li><a asp-action="Create">Create a Ticket</a></li>
+                <li><a asp-action="userView">Log Out</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.ActionLink("Submited On", "Index", new { sortOrder = ViewBag.submitParam })
+            </th>
+            <th>
+                Closed Date
+            </th>
+            <th>
+                @Html.ActionLink("Severity", "Index", new { sortOrder = ViewBag.severityParam })
+            </th>
+            <th>
+                @Html.ActionLink("Priority", "Index", new { sortOrder = ViewBag.priorityParam })
+            </th>
+            <th>
+                Assignee
+            </th>
+            <th>
+                Submitter
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Status
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            @if (item.status.id == 1 || item.status.id == 2)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SubmittedDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ClosedDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.severity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.priority)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.assignee.fullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.submitter.fullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.status.statusName)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
+                        <a asp-controller="comments" asp-action="Index" asp-route-id="@item.Id">View Comments</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
