@@ -10,8 +10,8 @@ using ticketsDemo.Data;
 namespace ticketsDemo.Migrations
 {
     [DbContext(typeof(ticketsContext))]
-    [Migration("20201026162436_fourth")]
-    partial class fourth
+    [Migration("20201106143729_rebuild")]
+    partial class rebuild
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -44,12 +44,14 @@ namespace ticketsDemo.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("password")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("terminationDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("username")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -77,6 +79,10 @@ namespace ticketsDemo.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("id");
+
+                    b.HasIndex("assigneeId");
+
+                    b.HasIndex("ticketID");
 
                     b.ToTable("comments");
                 });
@@ -153,7 +159,49 @@ namespace ticketsDemo.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("assigneeId");
+
+                    b.HasIndex("statusId");
+
+                    b.HasIndex("submitterId");
+
                     b.ToTable("tickets");
+                });
+
+            modelBuilder.Entity("ticketsDemo.Models.comments", b =>
+                {
+                    b.HasOne("ticketsDemo.Models.assignee", "assignee")
+                        .WithMany()
+                        .HasForeignKey("assigneeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ticketsDemo.Models.tickets", "tickets")
+                        .WithMany()
+                        .HasForeignKey("ticketID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ticketsDemo.Models.tickets", b =>
+                {
+                    b.HasOne("ticketsDemo.Models.assignee", "assignee")
+                        .WithMany()
+                        .HasForeignKey("assigneeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ticketsDemo.Models.status", "status")
+                        .WithMany()
+                        .HasForeignKey("statusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ticketsDemo.Models.submitter", "submitter")
+                        .WithMany()
+                        .HasForeignKey("submitterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

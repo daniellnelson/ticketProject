@@ -2,7 +2,7 @@
 
 namespace ticketsDemo.Migrations
 {
-    public partial class fifth : Migration
+    public partial class start : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
